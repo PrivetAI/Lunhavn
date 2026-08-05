@@ -8,7 +8,7 @@ struct LunhavnApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LaunchRouterView(engine: engine)
+            RootView(engine: engine)
                 .preferredColorScheme(.dark)
                 .statusBarHidden(true)
                 .onAppear {
