@@ -195,6 +195,7 @@ extension GameEngine {
         fresh.rngSeed = rng.nextUInt()
 
         state = fresh
+        syncTutorialFlag()
         rng = DeterministicRandom(seed: fresh.rngSeed)
         rebuildStats()
         state.gold = stats.startingGold

@@ -144,6 +144,7 @@ extension GameEngine {
     func resetProgress() {
         SaveService.shared.wipe()
         state = GameEngine.freshState()
+        syncTutorialFlag()
         rng = DeterministicRandom(seed: state.rngSeed)
         rebuildStats()
         ships.removeAll()
@@ -159,11 +160,13 @@ extension GameEngine {
 
     func resetTutorial() {
         state.tutorialDone = false
+        syncTutorialFlag()
         bumpVersion()
     }
 
     func completeTutorial() {
         state.tutorialDone = true
+        syncTutorialFlag()
         persist()
         bumpVersion()
     }

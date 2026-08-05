@@ -7,7 +7,7 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
-            if engine.state.tutorialDone {
+            if engine.tutorialDone {
                 mainShell
             } else {
                 OnboardingView(engine: engine)
@@ -15,7 +15,7 @@ struct RootView: View {
             }
             ToastOverlay(engine: engine)
         }
-        .animation(.easeInOut(duration: 0.4), value: engine.state.tutorialDone)
+        .animation(.easeInOut(duration: 0.4), value: engine.tutorialDone)
         .sheet(item: Binding(get: { engine.idleReport }, set: { _ in engine.dismissIdleReport() })) { report in
             IdleSummaryView(report: report) { engine.dismissIdleReport() }
         }

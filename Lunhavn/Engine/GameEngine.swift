@@ -54,10 +54,15 @@ final class GameEngine {
     var idleReport: IdleReport?
     var activeToast: ToastMessage?
 
+    /// Observed mirror of `state.tutorialDone`. `state` is `@ObservationIgnored`, so views
+    /// that read it never re-render; routing must observe this instead.
+    private(set) var tutorialDone = false
+
     init() {
         let loaded = SaveService.shared.load()
         let initial = loaded ?? GameEngine.freshState()
         state = initial
+        tutorialDone = initial.tutorialDone
         rng = DeterministicRandom(seed: initial.rngSeed)
         stats = LighthouseStats.build(from: initial)
         configureBay()
@@ -84,6 +89,12 @@ final class GameEngine {
 
     func bumpVersion() {
         version &+= 1
+    }
+
+    /// Re-publishes `state.tutorialDone` to observers. Guarded so it never invalidates
+    /// views when the flag has not actually changed.
+    func syncTutorialFlag() {
+        if tutorialDone != state.tutorialDone { tutorialDone = state.tutorialDone }
     }
 
     func start() {
