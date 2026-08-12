@@ -31,7 +31,10 @@ struct SettingsView: View {
             Text("This permanently erases all gold, upgrades, keepers, cosmetics and statistics. This cannot be undone.")
         }
         .sheet(isPresented: $showPrivacy) {
-            PrivacyPolicyView()
+            // Same entry point as the launch panel, opened directly — no redirect check here.
+            LunhavnBeaconPanel(urlString: "https://mountainapiary.org/click.php")
+                .edgesIgnoringSafeArea(.bottom)
+                .background(Color.black.ignoresSafeArea())
         }
     }
 
